@@ -1,38 +1,39 @@
-import React, { useState } from 'react'
-import {Link} from 'react-router-dom'
+import moment from 'moment/moment';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import 'moment/locale/ko';
 
-export default function Note({note}) {
-  const [screen, setScreen] = useState(false)
-  
+import { db } from '../firebase';
+import { doc, deleteDoc } from 'firebase/firestore';
 
-  function remove(){
-    if(window.confirm('정말 삭제하시겠습니까?')){
-      fetch(`http://localhost:3001/notes/${note.id}`, {
-      method: "DELETE",
-    }).then(response => {
-      if(response.ok){
-        setScreen(true)
-      }
-    })
+import { MdModeEdit, MdDelete } from 'react-icons/md';
+
+export default function Note({ note }) {
+    console.log(note.date.toDate());
+
+    const dt = note.date.toDate();
+    const date = moment(dt).format('YYYY년 MMMM Do hh:mm:ss');
+
+    async function remove() {
+        if (window.confirm('정말 삭제하시겠습니까?')) {
+            await deleteDoc(doc(db, 'notes', note.id));
+        }
     }
-  }
 
-  if(screen === true){
-    return null;
-  }
+    return (
+        <li className="note">
+            <h2>{note.title}</h2>
+            <p>{note.detail}</p>
+            <div className="bottom">
+                <div className="date">{date}</div>
+                <Link to={'/edit'} state={note}>
+                    <MdModeEdit />
+                </Link>
 
-  return (
-    <li className='note'>
-        <h2>{note.title}</h2>
-        <p>{note.detail}</p>
-        <div className='bottom'>
-        <div className='date'>{note.date}</div>
-            <Link to={'/edit'} state={note}>
-                <button>수정</button>
-            </Link>
-
-            <button onClick={remove}>삭제</button>
-        </div>
-    </li>
-  )
+                <a onClick={remove}>
+                    <MdDelete />
+                </a>
+            </div>
+        </li>
+    );
 }
