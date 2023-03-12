@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import NoteList from './components/NoteList'
+import Header from './components/Header'
+import Write from './components/Write'
 
-function App() {
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import Edit from './components/Edit'
+
+//import Hello from './Hello'
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          안녕하세요
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+      <BrowserRouter>
+        <div className='App'>
+          <Header />
 
-export default App;
+          <Routes>
+            <Route path="/" element={<NoteList />} />
+            <Route path="/write" element={<Write />} />
+            <Route path="/edit" element={<Edit />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+
+    // <div className='container'>
+    //   <h1 className='title'>hello react</h1>
+
+    //   <Hello name={'Picaso'} age={20}/>
+    //   <Hello name={'Alice'} age={12}/>
+    //   <Hello name={'Jobs'} age={30}/>
+    // </div>
+  )
+}
