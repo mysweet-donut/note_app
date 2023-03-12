@@ -12,6 +12,9 @@ npm start -> 개발서버를 구동한다
 npm i -g json-server
 json-server --watch ./src/db/data.json --port 3001
 
+sort & order
+https://sewonzzang.tistory.com/4
+
 ### react router
 
 npm i react-router-dom

@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import {useNavigate} from 'react-router-dom'
 import moment from 'moment/moment'
+import 'moment/locale/ko'
 
 
 export default function Write() {
@@ -28,7 +29,7 @@ export default function Write() {
         body: JSON.stringify({
             "title": titleRef.current.value,
             "detail": detailRef.current.value,
-            "date" : moment().format('YYYY-MMMM-DD h:mm:ss a'),
+            "date" : moment().format('YYYY년 MMMM Do hh:mm:ss'),
         }),
         }).then((response) => {
             if(response.ok){
